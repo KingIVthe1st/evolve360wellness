@@ -275,38 +275,26 @@ serviceCards.forEach(card => {
 });
 
 // ===================================
-// Number Counter Animation
+// Hero Stats Animation
 // ===================================
-function animateCounter(element, target, duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16);
-
-    const timer = setInterval(() => {
-        start += increment;
-        if (start >= target) {
-            element.textContent = target + (element.dataset.suffix || '');
-            clearInterval(timer);
-        } else {
-            element.textContent = Math.floor(start) + (element.dataset.suffix || '');
-        }
-    }, 16);
-}
-
-// Animate stats when they come into view
-const statNumbers = document.querySelectorAll('.stat-number');
+// Animate stat icons when they come into view
+const statItems = document.querySelectorAll('.stat-item');
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
             entry.target.classList.add('animated');
-            const text = entry.target.textContent;
-            const number = parseInt(text.replace(/\D/g, ''));
-            entry.target.dataset.suffix = text.replace(/[0-9]/g, '');
-            animateCounter(entry.target, number);
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
         }
     });
 }, { threshold: 0.5 });
 
-statNumbers.forEach(stat => statsObserver.observe(stat));
+statItems.forEach(stat => {
+    stat.style.opacity = '0';
+    stat.style.transform = 'translateY(20px)';
+    stat.style.transition = 'all 0.6s ease';
+    statsObserver.observe(stat);
+});
 
 // ===================================
 // Lazy Loading Images

@@ -345,27 +345,38 @@ p {
 
 .hero-stats {
     display: flex;
-    gap: 60px;
+    gap: 40px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     text-align: left;
 }
 
-.stat-number {
-    font-size: 3rem;
-    font-weight: 800;
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
     color: var(--white);
-    font-family: var(--font-display);
-    line-height: 1;
-    margin-bottom: 8px;
+    flex-shrink: 0;
 }
 
 .stat-label {
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
-    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1rem;
+    font-weight: 600;
+    max-width: 120px;
+    line-height: 1.3;
 }
 
 .hero-shape {
@@ -1152,14 +1163,32 @@ p {
 
     .hero-buttons {
         flex-direction: column;
+        width: 100%;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        text-align: center;
     }
 
     .hero-stats {
-        gap: 30px;
+        gap: 20px;
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-    .stat-number {
-        font-size: 2.5rem;
+    .stat-item {
+        width: 100%;
+    }
+
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+    }
+
+    .stat-label {
+        font-size: 1rem;
     }
 
     .services-grid {
@@ -1202,25 +1231,64 @@ p {
     }
 
     .btn {
-        padding: 12px 24px;
-        font-size: 0.95rem;
+        padding: 14px 24px;
+        font-size: 1rem;
+        min-height: 48px; /* Touch-friendly */
     }
 
     .hero-title {
         font-size: 2rem;
+        line-height: 1.2;
     }
 
     .hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1rem;
+        line-height: 1.6;
     }
 
     .service-card,
     .testimonial-card {
-        padding: 30px;
+        padding: 25px;
     }
 
     .main-image {
-        height: 400px;
+        height: 350px;
+    }
+
+    .hero-stats {
+        gap: 15px;
+        margin-top: 40px;
+    }
+
+    .stat-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    .stat-label {
+        font-size: 0.95rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    .cta-buttons .btn {
+        width: 100%;
+        padding: 16px 32px;
+    }
+
+    .back-to-top {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.1rem;
     }
 }
 
