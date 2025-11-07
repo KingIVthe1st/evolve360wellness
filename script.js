@@ -98,24 +98,56 @@ backToTopButton.addEventListener('click', () => {
 });
 
 // ===================================
-// Intersection Observer for Animations
+// Premium Intersection Observer for Animations
 // ===================================
 const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
 };
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+// Premium smooth reveal animation
+const premiumObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('animate-in');
+            // Add staggered delay for smooth sequential appearance
+            setTimeout(() => {
+                entry.target.classList.add('animate-in');
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0) scale(1)';
+            }, index * 80); // Stagger by 80ms for premium feel
         }
     });
 }, observerOptions);
 
-// Observe all cards and sections
+// Observe all cards and sections with smooth animation
 const animateElements = document.querySelectorAll('.service-card, .testimonial-card, .why-card, .about-feature');
-animateElements.forEach(element => observer.observe(element));
+animateElements.forEach((element, index) => {
+    // Initial state
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(40px) scale(0.95)';
+    element.style.transition = 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)';
+    element.style.willChange = 'opacity, transform';
+
+    premiumObserver.observe(element);
+});
+
+// Smooth scroll reveal for section headers
+const sectionHeaders = document.querySelectorAll('.section-header');
+const headerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
+
+sectionHeaders.forEach(header => {
+    header.style.opacity = '0';
+    header.style.transform = 'translateY(30px)';
+    header.style.transition = 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+    headerObserver.observe(header);
+});
 
 // ===================================
 // Contact Form Submission
@@ -280,21 +312,50 @@ serviceCards.forEach(card => {
 // Animate stat icons when they come into view
 const statItems = document.querySelectorAll('.stat-item');
 const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry, index) => {
         if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-            entry.target.classList.add('animated');
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                entry.target.classList.add('animated');
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0) scale(1)';
+            }, index * 120); // Premium staggered reveal
         }
     });
 }, { threshold: 0.5 });
 
 statItems.forEach(stat => {
     stat.style.opacity = '0';
-    stat.style.transform = 'translateY(20px)';
-    stat.style.transition = 'all 0.6s ease';
+    stat.style.transform = 'translateY(20px) scale(0.9)';
+    stat.style.transition = 'all 0.7s cubic-bezier(0.16, 1, 0.3, 1)';
+    stat.style.willChange = 'opacity, transform';
     statsObserver.observe(stat);
 });
+
+// ===================================
+// Premium Hero Parallax Effect
+// ===================================
+let ticking = false;
+const hero = document.querySelector('.hero');
+
+function updateParallax() {
+    const scrolled = window.pageYOffset;
+
+    if (hero && scrolled < window.innerHeight) {
+        // Subtle parallax on hero background
+        requestAnimationFrame(() => {
+            hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+        });
+    }
+
+    ticking = false;
+}
+
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+    }
+}, { passive: true });
 
 // ===================================
 // Lazy Loading Images
@@ -316,6 +377,94 @@ if ('IntersectionObserver' in window) {
     const images = document.querySelectorAll('img[data-src]');
     images.forEach(img => imageObserver.observe(img));
 }
+
+// ===================================
+// Premium CTA Button Animations
+// ===================================
+const ctaButtons = document.querySelectorAll('.cta-button, .primary-btn, .secondary-btn');
+ctaButtons.forEach(button => {
+    // Add premium hover effect with scale and smooth transition
+    button.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+    button.style.willChange = 'transform';
+
+    button.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px) scale(1.02)';
+    });
+
+    button.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+    });
+
+    // Add active press effect
+    button.addEventListener('mousedown', function() {
+        this.style.transform = 'translateY(0) scale(0.98)';
+    });
+
+    button.addEventListener('mouseup', function() {
+        this.style.transform = 'translateY(-2px) scale(1.02)';
+    });
+});
+
+// ===================================
+// Premium Form Field Animations
+// ===================================
+const formFields = document.querySelectorAll('input, textarea, select');
+formFields.forEach(field => {
+    field.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+
+    field.addEventListener('focus', function() {
+        this.style.transform = 'scale(1.01)';
+        this.style.boxShadow = '0 4px 20px rgba(11, 127, 171, 0.15)';
+    });
+
+    field.addEventListener('blur', function() {
+        this.style.transform = 'scale(1)';
+        this.style.boxShadow = '';
+    });
+});
+
+// ===================================
+// Premium Mobile Touch Interactions
+// ===================================
+if ('ontouchstart' in window) {
+    // Enhanced touch feedback for interactive elements
+    const touchElements = document.querySelectorAll('button, .service-card, .cta-button, a');
+
+    touchElements.forEach(element => {
+        element.addEventListener('touchstart', function() {
+            this.style.transition = 'transform 0.1s ease';
+            this.style.transform = 'scale(0.97)';
+        }, { passive: true });
+
+        element.addEventListener('touchend', function() {
+            this.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+            this.style.transform = 'scale(1)';
+        }, { passive: true });
+    });
+}
+
+// ===================================
+// Smooth Scroll Performance Optimization
+// ===================================
+// Reduce motion for users who prefer it (accessibility)
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+if (prefersReducedMotion.matches) {
+    // Disable animations for users who prefer reduced motion
+    document.querySelectorAll('*').forEach(element => {
+        element.style.animation = 'none';
+        element.style.transition = 'none';
+    });
+}
+
+// Optimize scroll performance with debouncing for non-critical updates
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+        // Non-critical scroll updates go here
+    }, 100);
+}, { passive: true });
 
 // ===================================
 // Prevent scroll when mobile menu is open
