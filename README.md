@@ -151,7 +151,7 @@ The contact form includes:
 
 For questions or support, contact:
 - Email: info@evolve360wellness.com
-- Phone: (832) 672-4893
+- Phone: (619) 829-0886
 
 ---
 
